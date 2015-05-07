@@ -1,0 +1,28 @@
+{
+  "name": "supermixer",
+  "version": "0.1.0",
+  "description": "Mix JS objects deep, shallow, traversing prototypes, selectively, etc.",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha  --ui bdd"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/koresar/supermixer.git"
+  },
+  "keywords": [
+    "merge",
+    "extend",
+    "assign",
+    "deep"
+  ],
+  "author": "koresar",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/koresar/supermixer/issues"
+  },
+  "homepage": "https://github.com/koresar/supermixer#readme",
+  "dependencies": {
+    "lodash": "^3.8.0"
+  }
+}
