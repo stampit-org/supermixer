@@ -10,8 +10,11 @@ $ npm i supermixer
 ## Using
 Requiring.
 ```js
-var mixer = require('supermixer'); // This is a factory function.
+var mixer = require('supermixer'); // This is a factory.
 ```
+
+NB! All functions always mutate the first argument!
+You might want to pass an empty object `{}` as the first argument.
 
 Regular mixin, aka `Object.assing`, aka `$.extend`.
 ```js
@@ -67,3 +70,11 @@ mergeChainData = mixer.mergeChainNonFunctions; //same as above
 EventEmitter.prototype.hello = "world";
 mergeChainData({}, new EventEmitter()); // { hello: "world" }
 ```
+
+# TODO
+* Tests
+* Travis
+* More `mixer.FUNCTION` functions
+
+# Want to contribute?
+It is Open Open Source. Whoever sends a PR, which gets accepted, receives the write permissions.
