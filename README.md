@@ -13,7 +13,7 @@ Requiring.
 var mixer = require('supermixer'); // This is a factory function.
 ```
 
-Regular mixin, aka Object.assing, aka $.extend.
+Regular mixin, aka `Object.assing`, aka `$.extend`.
 ```js
 var extend = mixer(); // the regular Object.assign function.
 extend = mixer.mixin; // same as above.
@@ -21,14 +21,14 @@ extend = mixer.mixin; // same as above.
 extend({}, { a: 1 }, { b: 2 }); // { a: 1, b: 2 }
 ```
 
-Mixin all but functions.
+Mixin all functions only.
 ```js
 var functionMixer = mixer({ // assigns own functions only
   filter: function (val) { return typeof val === 'function' ; }
 });
 functionMixer = module.exports.mixinFunctions; // same as above
 
-functionMixer({}, { a: function(){} },  { b: function(){} }); // { a(), b() }
+functionMixer({}, { a: "x" },  { b: function(){} }); // { b() }
 ```
 
 Mixin functions including prototype chain.
