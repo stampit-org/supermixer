@@ -1,7 +1,7 @@
 "use strict";
 var forOwn = require('lodash/object/forOwn');
 var forIn = require('lodash/object/forIn');
-var deepClone = require('lodash/lang/cloneDeep');
+var cloneDeep = require('lodash/lang/cloneDeep');
 var isObject = require('lodash/lang/isObject');
 var isFunction = require('lodash/lang/isFunction');
 
@@ -22,7 +22,7 @@ var mixer = function (opts) {
    * @param {object[]} objects    Objects to be combined (0...n objects).
    * @return {object} Target Object.
    */
-  return function mixIn(target, objects) {
+  return function supermixer(target, objects) {
     var loop = opts.chain ? forIn : forOwn;
     var i = 0,
       n = arguments.length,
@@ -39,7 +39,7 @@ var mixer = function (opts) {
               return;
             }
 
-            this[key] = opts.getValue ? opts.getValue(val, this[key]) : val;
+            this[key] = opts.getValue ? opts.getValue(this[key], val) : val;
           },
           target);
       }
@@ -49,17 +49,17 @@ var mixer = function (opts) {
 };
 
 var merge = mixer({
-  getTarget: deepClone,
+  getTarget: cloneDeep,
   getValue: mergeSourceToTarget
 });
 
-function mergeSourceToTarget(srcVal, targetVal) {
-  if (isObject(srcVal) && isObject(targetVal)) {
+function mergeSourceToTarget(targetVal, srcVal) {
+  if (isObject(targetVal) && isObject(srcVal)) {
     // inception, deep merge objects
     return merge(targetVal, srcVal);
   } else {
     // make sure arrays, regexp, date, objects are cloned
-    return deepClone(srcVal);
+    return cloneDeep(srcVal);
   }
 }
 
@@ -68,19 +68,19 @@ module.exports = mixer;
 /**
  * Regular mixin function.
  */
-module.exports.mixIn = mixer();
+module.exports.mixin = mixer();
 
 /**
  * mixin for functions only.
  */
-module.exports.mixInFunctions = mixer({
+module.exports.mixinFunctions = mixer({
   filter: isFunction
 });
 
 /**
  * mixin for functions including prototype chain.
  */
-module.exports.mixInChainFunctions = mixer({
+module.exports.mixinChainFunctions = mixer({
   filter: isFunction,
   chain: true
 });
@@ -91,11 +91,18 @@ module.exports.mixInChainFunctions = mixer({
 module.exports.merge = merge;
 
 /**
+ * lodash.cloneDeep
+ */
+module.exports.cloneDeep = cloneDeep;
+
+module.exports.mergeSourceToTarget = mergeSourceToTarget;
+
+/**
  * merge objects including prototype chain properties.
  */
 module.exports.mergeChainNonFunctions = mixer({
   filter: function (val) { return !isFunction(val); },
-  getTarget: deepClone,
+  getTarget: cloneDeep,
   getValue: mergeSourceToTarget,
   chain: true
 });
