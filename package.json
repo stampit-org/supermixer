@@ -1,6 +1,6 @@
 {
   "name": "supermixer",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "Mix JS objects deep, shallow, traversing prototypes, selectively, etc.",
   "main": "index.js",
   "scripts": {
