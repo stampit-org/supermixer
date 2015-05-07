@@ -42,9 +42,10 @@ chainFunctionMixer = mixer.mixinChainFunctions; // same as above
 chainFunctionMixer({}, new EventEmitter()); // { on(), off(), emit(), ... }
 ```
 
-Deep merge any number of objects.
+Deep merge data of any number of objects.
 ```js
 var mergeDeep = mixer({ // deep merge own properties.
+  filter: function (val) { return typeof val !== 'function'; },
   getTarget: mixer.cloneDeep,
   getValue: mixer.mergeSourceToTarget
 });
