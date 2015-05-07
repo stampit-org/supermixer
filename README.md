@@ -21,7 +21,7 @@ extend = mixer.mixin; // same as above.
 extend({}, { a: 1 }, { b: 2 }); // { a: 1, b: 2 }
 ```
 
-Mixin all functions only.
+Mixin functions only.
 ```js
 var functionMixer = mixer({ // assigns own functions only
   filter: function (val) { return typeof val === 'function' ; }
@@ -46,7 +46,7 @@ Deep merge any number of objects.
 ```js
 var mergeDeep = mixer({ // deep merge own properties.
   getTarget: mixer.cloneDeep,
-  getValue: mergeSourceToTarget
+  getValue: mixer.mergeSourceToTarget
 });
 mergeDeep = mixer.merge; // same as above
 
