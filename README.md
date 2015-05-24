@@ -59,6 +59,7 @@ Deep merge non functions to a new object, including prototype chain.
 ```js
 var mergeChainData =  mixer({ // deeply merges data properties, traversing through prototype chain
   filter: function (val) { return typeof val !== 'function'; },
+  deep: true,
   chain: true
 });
 mergeChainData = mixer.mergeChainNonFunctions; //same as above
