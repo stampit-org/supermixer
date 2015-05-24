@@ -28,7 +28,7 @@ Mixin functions only.
 var functionMixer = mixer({ // assigns own functions only
   filter: function (val) { return typeof val === 'function' ; }
 });
-functionMixer = module.exports.mixinFunctions; // same as above
+functionMixer = mixer.mixinFunctions; // same as above
 
 functionMixer({}, { a: "x" },  { b: function(){} }); // { b() }
 ```
