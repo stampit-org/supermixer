@@ -14,9 +14,7 @@ let mergeSourceToTarget;
  * @param {Boolean} opts.deep Deep looping through the nested properties.
  * @param {Boolean} opts.clone Do not mutate the target object. Clone it instead.
  */
-export default function mixer(opts) {
-  opts = opts || {};
-
+export default function mixer(opts = {}) {
   /**
    * Combine properties from the passed objects into target. This method mutates target,
    * if you want to create a new Object pass an empty object as first param.
