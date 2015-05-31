@@ -2,9 +2,16 @@
   "name": "supermixer",
   "version": "0.3.1",
   "description": "Mix JS objects deep, shallow, traversing prototypes, selectively, etc.",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "files": [
+    "dist/"
+  ],
   "scripts": {
-    "test": "mocha  --ui bdd"
+    "build": "npm run clean && babel src --out-dir dist",
+    "clean": "rimraf dist",
+    "lint": "eslint src test",
+    "prepublish": "npm run test && npm run build",
+    "test": "npm run lint && babel-node test/test.js"
   },
   "repository": {
     "type": "git",
@@ -26,7 +33,10 @@
     "lodash": "^3.8.0"
   },
   "devDependencies": {
-    "chai": "^2.3.0",
-    "mocha": "^2.2.4"
+    "babel": "^5.4.7",
+    "babel-eslint": "^3.1.9",
+    "eslint": "^0.21.2",
+    "rimraf": "^2.3.4",
+    "tape": "^4.0.0"
   }
 }
