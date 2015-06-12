@@ -1,33 +1,8 @@
 import forOwn from 'lodash/object/forOwn';
 import forIn from 'lodash/object/forIn';
 import cloneDeep from 'lodash/lang/cloneDeep';
-import isObject from 'lodash/lang/isObject';
-
-let mixer;
-
-function mergeSourceToTarget(targetVal, srcVal, opts) {
-  const isTargObj = isObject(targetVal);
-  const isSrcObj = isObject(srcVal);
-
-  if (isTargObj && !isSrcObj) {
-    return targetVal;
-  } else if (isTargObj && isSrcObj) {
-    /**
-     * Inception, deep merge objects
-     */
-    return mixer(opts)(targetVal, srcVal);
-  } else if (isSrcObj) {
-    /**
-     * Target is not object, but source is. Make target an object too.
-     */
-    return mergeSourceToTarget({}, srcVal, opts);
-  }
-
-  /**
-   * Make sure arrays, regexp, date, numbers are cloned
-   */
-  return cloneDeep(srcVal);
-}
+import isMergeable from 'lodash/lang/isObject';
+import isUndefined from 'lodash/lang/isUndefined';
 
 /**
  * Factory for creating mixin functions of all kinds.
@@ -36,9 +11,13 @@ function mergeSourceToTarget(targetVal, srcVal, opts) {
  * @param {Function} opts.filter Function which filters value and key.
  * @param {Boolean} opts.chain Loop through prototype properties too.
  * @param {Boolean} opts.deep Deep looping through the nested properties.
- * @param {Boolean} opts.clone Do not mutate the target object. Clone it instead.
  */
-mixer = function mixer(opts = {}) {
+export default function mixer(opts = {}) {
+  if (opts.deep && !opts._innerMixer) {
+    opts._innerMixer = true; // avoiding infinite recursion.
+    opts._innerMixer = mixer(opts); // create same mixer for recursion purpose.
+  }
+
   /**
    * Combine properties from the passed objects into target. This method mutates target,
    * if you want to create a new Object pass an empty object as first param.
@@ -47,24 +26,34 @@ mixer = function mixer(opts = {}) {
    * @param {...Object} objects Objects to be combined (0...n objects).
    * @return {Object} The mixed object.
    */
-  return (target, ...objects) => {
-    const loop = opts.chain ? forIn : forOwn;
-    const result = opts.clone ? cloneDeep(target) : target;
+  return function mix(target, ...sources) {
+    if (isUndefined(target)) { // This means we have called the function. See recursion calls below.
+      if (opts.deep) {
+        return cloneDeep(sources[0], opts.filter);
+      }
 
-    function iteratee(val, key) {
-      if (opts.filter && !opts.filter(val, key)) {
+      return sources[0];
+    }
+
+    if (opts.noOverwrite) {
+      if (!isMergeable(target) || !isMergeable(sources[0])) {
+        return target;
+      }
+    }
+
+    function iteratee(srcValue, key) {
+      if (opts.filter && !opts.filter(srcValue, target[key], key)) {
         return;
       }
 
-      result[key] = opts.deep ? mergeSourceToTarget(result[key], val, opts) : val;
+      target[key] = opts.deep ? opts._innerMixer(target[key], srcValue) : srcValue;
     }
 
-    objects.forEach((obj) => {
+    const loop = opts.chain ? forIn : forOwn;
+    sources.forEach((obj) => {
       loop(obj, iteratee);
     });
 
-    return result;
+    return target;
   };
-};
-
-export default mixer;
+}

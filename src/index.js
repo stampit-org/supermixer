@@ -27,7 +27,6 @@ const mixinChainFunctions = mixer({
  * Regular object merge function. Ignores functions.
  */
 const merge = mixer({
-  filter: isNotFunction,
   deep: true
 });
 

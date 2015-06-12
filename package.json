@@ -11,7 +11,7 @@
     "clean": "rimraf dist",
     "lint": "eslint src test",
     "prepublish": "npm run test && npm run build",
-    "test": "npm run lint && babel-node test/test.js"
+    "test": "npm run lint && babel-node test/"
   },
   "repository": {
     "type": "git",
@@ -36,6 +36,7 @@
     "babel": "^5.4.7",
     "babel-eslint": "^3.1.9",
     "eslint": "^0.21.2",
+    "require-all": "^1.1.0",
     "rimraf": "^2.3.4",
     "tape": "^4.0.0"
   }
