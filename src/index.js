@@ -12,7 +12,7 @@ const mixin = mixer();
  * Mixin functions only.
  */
 const mixinFunctions = mixer({
-  filter: isFunction,
+  filter: isFunction
 });
 
 /**
@@ -20,7 +20,7 @@ const mixinFunctions = mixer({
  */
 const mixinChainFunctions = mixer({
   filter: isFunction,
-  chain: true,
+  chain: true
 });
 
 /**
@@ -28,7 +28,7 @@ const mixinChainFunctions = mixer({
  */
 const merge = mixer({
   filter: isNotFunction,
-  deep: true,
+  deep: true
 });
 
 /**
@@ -37,7 +37,7 @@ const merge = mixer({
 const mergeChainNonFunctions = mixer({
   filter: isNotFunction,
   deep: true,
-  chain: true,
+  chain: true
 });
 
 export default mixer;
@@ -46,5 +46,5 @@ export {
   mixinFunctions,
   mixinChainFunctions,
   merge,
-  mergeChainNonFunctions,
+  mergeChainNonFunctions
 };

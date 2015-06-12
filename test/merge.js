@@ -20,7 +20,7 @@ test('merging two objects with function props', (t) => {
   const o2 = { deep2: { deeper: noop } };
   const result = merge({}, o1, o2);
 
-  t.notOk(result.deep1, 'should not merge functions on level deep');
+  t.notOk(result.deep1, 'should not merge functions one level deep');
   t.equal(typeof result.deep2, 'object', 'should merge objects one level deep');
   t.notOk(result.deep2.deeper, 'should not merge functions two or more levels deep');
 });
