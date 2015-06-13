@@ -58,7 +58,6 @@ chainFunctionMixer({}, new EventEmitter());
 ```js
 // deep merge own properties
 var mergeDeep = mixer({
-  filter: function (val) { return typeof val !== 'function'; },
   deep: true
 });
 // OR
@@ -66,6 +65,20 @@ mergeDeep = mixer.merge;
 
 mergeDeep({ url: { host: "example.com" } }, { url: { port: 81 } });
 // { url: { host: "example.com", port: 81 } }
+```
+
+### Deep merge data but do not overwrite existing values.
+```js
+// deep merge own properties
+var mergeDeep = mixer({
+  deep: true,
+  noOverwrite: true
+});
+// OR
+mergeUnique = mixer.mergeUnique;
+
+mergeUnique({ url: { host: "example.com" } }, { url: { host: "evil.com" } });
+// { url: { host: "example.com" } }
 ```
 
 ### Deep merge non functions to a new object, including prototype chain.
@@ -83,11 +96,6 @@ EventEmitter.prototype.hello = "world";
 mergeChainData(new EventEmitter());
 // { hello: "world" }
 ```
-
-## TODO
-* Tests
-* Travis
-* More `mixer.FUNCTION` functions
 
 ## Want to contribute?
 This project is Open Open Source. This means whoever submits an accepted PR will receive write permissions to the project.

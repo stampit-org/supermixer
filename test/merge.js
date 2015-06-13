@@ -44,14 +44,12 @@ test('merge', (t) => {
   const o1 = {
     foo: {bar: 'bar'},
     propsOverride: false,
-    func1: function () {
-    }
+    func1() {}
   };
   const o2 = {
     bar: 'bar',
     propsOverride: true,
-    func2: function () {
-    }
+    func2() {}
   };
 
   const result = merge({}, o1, o2);
