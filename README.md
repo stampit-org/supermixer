@@ -14,8 +14,6 @@ Unlike underscore/lodash utility methods this module allows you to:
 $ npm install supermixer
 ```
 
-## Getting started
-
 ```js
 var mixer = require('supermixer');
 ```
@@ -38,7 +36,7 @@ The `opts`:
 
 Usage:
 ```js
-const mix = mixer({
+const mix = supermixer({
   filter(sourceValue, targetValue, key) { return key[0] !== '_'; }, // do not copy "private" values
   transform(resultValue, targetValue, key) { console.log(key); return resultValue; }, // log each key which gets set
   chain: true,
@@ -52,9 +50,9 @@ const johnStream = mix({}, new Stream(), { name: "John Stream"; })
 ### Regular mixin, aka `Object.assign`, aka `$.extend`.
 ```js
  // the regular Object.assign function
-var extend = mixer();
+var extend = supermixer();
 // OR
-extend = mixer.mixin;
+extend = supermixer.mixin;
 
 extend({}, { a: 1 }, { b: 2 });
 // { a: 1, b: 2 }
@@ -63,11 +61,11 @@ extend({}, { a: 1 }, { b: 2 });
 ### Mixin functions only.
 ```js
 // assigns own functions only
-var functionMixer = mixer({
+var functionMixer = supermixer({
   filter: function (sourceValue) { return typeof sourceValue === 'function' ; }
 });
 // OR
-functionMixer = mixer.mixinFunctions;
+functionMixer = supermixer.mixinFunctions;
 
 functionMixer({}, { a: "x" },  { b: function(){} });
 // { b() }
@@ -76,12 +74,12 @@ functionMixer({}, { a: "x" },  { b: function(){} });
 ### Mixin functions including prototype chain.
 ```js
 // assigns functions only, but traverse through the prototype chain
-var chainFunctionMixer = mixer({
+var chainFunctionMixer = supermixer({
   filter: function (sourceValue) { return typeof sourceValue === 'function' ; },
   chain: true
 });
 // OR
-chainFunctionMixer = mixer.mixinChainFunctions;
+chainFunctionMixer = supermixer.mixinChainFunctions;
 
 chainFunctionMixer({}, new EventEmitter());
 // { on(), off(), emit(), ... }
@@ -90,11 +88,11 @@ chainFunctionMixer({}, new EventEmitter());
 ### Deep merge data of any number of objects to a new object.
 ```js
 // deep merge own properties
-var mergeDeep = mixer({
+var mergeDeep = supermixer({
   deep: true
 });
 // OR
-mergeDeep = mixer.merge;
+mergeDeep = supermixer.merge;
 
 mergeDeep({ url: { host: "example.com" } }, { url: { port: 81 } });
 // { url: { host: "example.com", port: 81 } }
@@ -103,12 +101,12 @@ mergeDeep({ url: { host: "example.com" } }, { url: { port: 81 } });
 ### Deep merge data but do not overwrite existing values.
 ```js
 // deep merge own properties
-var mergeDeep = mixer({
+var mergeDeep = supermixer({
   deep: true,
   noOverwrite: true
 });
 // OR
-mergeUnique = mixer.mergeUnique;
+mergeUnique = supermixer.mergeUnique;
 
 mergeUnique({ url: { host: "example.com" } }, { url: { host: "evil.com" } });
 // { url: { host: "example.com" } }
@@ -117,13 +115,13 @@ mergeUnique({ url: { host: "example.com" } }, { url: { host: "evil.com" } });
 ### Deep merge non functions to a new object, including prototype chain.
 ```js
 // deeply merges data properties, traversing through prototype chain
-var mergeChainData =  mixer({
+var mergeChainData =  supermixer({
   filter: function (sourceValue) { return typeof sourceValue !== 'function'; },
   deep: true,
   chain: true
 });
 // OR
-mergeChainData = mixer.mergeChainNonFunctions;
+mergeChainData = supermixer.mergeChainNonFunctions;
 
 EventEmitter.prototype.hello = "world";
 mergeChainData(new EventEmitter());
