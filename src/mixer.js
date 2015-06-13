@@ -9,6 +9,7 @@ import isUndefined from 'lodash/lang/isUndefined';
  *
  * @param {Object} opts
  * @param {Function} opts.filter Function which filters value and key.
+ * @param {Function} opts.transform Function which transforms each value.
  * @param {Boolean} opts.chain Loop through prototype properties too.
  * @param {Boolean} opts.deep Deep looping through the nested properties.
  * @param {Boolean} opts.noOverwrite Do not overwrite any existing data (aka first one wins).
@@ -45,12 +46,14 @@ export default function mixer(opts = {}) {
       }
     }
 
-    function iteratee(srcValue, key) {
-      if (opts.filter && !opts.filter(srcValue, target[key], key)) {
+    function iteratee(sourceValue, key) {
+      const targetValue = target[key];
+      if (opts.filter && !opts.filter(sourceValue, targetValue, key)) {
         return;
       }
 
-      target[key] = opts.deep ? opts._innerMixer(target[key], srcValue) : srcValue;
+      const result = opts.deep ? opts._innerMixer(targetValue, sourceValue) : sourceValue;
+      target[key] = opts.transform ? opts.transform(result, targetValue, key) : result;
     }
 
     const loop = opts.chain ? forIn : forOwn;
