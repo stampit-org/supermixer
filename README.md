@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/koresar/supermixer.svg?branch=master)](https://travis-ci.org/koresar/supermixer)
 # Super Mixer
 
 Mixes/merges/extends your object in multiple ways.
