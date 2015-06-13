@@ -2,7 +2,7 @@ import test from 'tape';
 import mixer from '../src/index';
 
 test('all options work together', (t) => {
-  var mix = mixer({
+  const mix = mixer({
     filter(sourceValue, targetValue, key) { return key[0] !== '_'; },
     transform(resultingValue, targetValue, key) { return key === 'name' ? 'new name' : resultingValue; },
     chain: true,
