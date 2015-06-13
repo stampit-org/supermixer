@@ -30,8 +30,10 @@ export default function mixer(opts = {}) {
    * @return {Object} The mixed object.
    */
   return function mix(target, ...sources) {
-    if (isUndefined(target)) { // This means it's us who called the function. See recursion calls below.
-      if (sources.length > 1) { // Weird, but someone called this mixer with first argument undefined.
+     // Check if it's us who called the function. See recursion calls are below.
+    if (isUndefined(target) || (!opts.noOverwrite && !isMergeable(target))) {
+      if (sources.length > 1) {
+        // Weird, but someone (not us!) called this mixer with an incorrect first argument.
         return opts._innerMixer({}, ...sources);
       }
       return cloneDeep(sources[0]);

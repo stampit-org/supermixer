@@ -31,6 +31,14 @@ const merge = mixer({
 });
 
 /**
+ * Regular object merge function. Ignores functions.
+ */
+const mergeUnique = mixer({
+  deep: true,
+  noOverwrite: true
+});
+
+/**
  * Merge objects including prototype chain properties.
  */
 const mergeChainNonFunctions = mixer({
@@ -45,5 +53,6 @@ export {
   mixinFunctions,
   mixinChainFunctions,
   merge,
+  mergeUnique,
   mergeChainNonFunctions
 };
