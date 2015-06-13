@@ -20,7 +20,34 @@ $ npm install supermixer
 var mixer = require('supermixer');
 ```
 
+
+## API
+
 _**NB! All functions always mutate the first argument.**_
+
+### supermixer(opts = {})
+The `opts`:
+```
+ * @param {Object} opts
+ * @param {Function} opts.filter Function which filters value and key.
+ * @param {Function} opts.transform Function which transforms each value.
+ * @param {Boolean} opts.chain Loop through prototype properties too.
+ * @param {Boolean} opts.deep Deep looping through the nested properties.
+ * @param {Boolean} opts.noOverwrite Do not overwrite any existing data (aka first one wins).
+```
+
+Usage:
+```js
+const mix = mixer({
+  filter(sourceValue, targetValue, key) { return key[0] !== '_'; }, // do not copy "private" values
+  transform(resultValue, targetValue, key) { console.log(key); return resultValue; }, // log each key which gets set
+  chain: true,
+  deep: true,
+  noOverwrite: true
+});
+
+const johnStream = mix({}, new Stream(), { name: "John Stream"; })
+```
 
 ### Regular mixin, aka `Object.assign`, aka `$.extend`.
 ```js
@@ -37,7 +64,7 @@ extend({}, { a: 1 }, { b: 2 });
 ```js
 // assigns own functions only
 var functionMixer = mixer({
-  filter: function (val) { return typeof val === 'function' ; }
+  filter: function (sourceValue) { return typeof sourceValue === 'function' ; }
 });
 // OR
 functionMixer = mixer.mixinFunctions;
@@ -50,7 +77,7 @@ functionMixer({}, { a: "x" },  { b: function(){} });
 ```js
 // assigns functions only, but traverse through the prototype chain
 var chainFunctionMixer = mixer({
-  filter: function (val) { return typeof val === 'function' ; },
+  filter: function (sourceValue) { return typeof sourceValue === 'function' ; },
   chain: true
 });
 // OR
@@ -91,7 +118,7 @@ mergeUnique({ url: { host: "example.com" } }, { url: { host: "evil.com" } });
 ```js
 // deeply merges data properties, traversing through prototype chain
 var mergeChainData =  mixer({
-  filter: function (val) { return typeof val !== 'function'; },
+  filter: function (sourceValue) { return typeof sourceValue !== 'function'; },
   deep: true,
   chain: true
 });
@@ -101,30 +128,6 @@ mergeChainData = mixer.mergeChainNonFunctions;
 EventEmitter.prototype.hello = "world";
 mergeChainData(new EventEmitter());
 // { hello: "world" }
-```
-
-## API
-
-### supermixer(opts = {})
-The `opts`:
-```
- * @param {Object} opts
- * @param {Function} opts.filter Function which filters value and key.
- * @param {Function} opts.transform Function which transforms each value.
- * @param {Boolean} opts.chain Loop through prototype properties too.
- * @param {Boolean} opts.deep Deep looping through the nested properties.
- * @param {Boolean} opts.noOverwrite Do not overwrite any existing data (aka first one wins).
-```
-
-Usage:
-```js
-mixer({
-  filter(sourceValue, targetValue, key) { return key[0] !== '_'; }, // do not copy "private" values
-  transform(resultValue, targetValue, key) { console.log(key); return resultValue; }, // log each key which gets set
-  chain: true,
-  deep: true,
-  noOverwrite: true
-});
 ```
 
 ## Want to contribute?
