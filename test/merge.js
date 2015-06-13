@@ -22,3 +22,19 @@ test('merging two objects with function props', (t) => {
   t.ok(result.deep2.deeper, 'should not merge functions two or more levels deep');
   t.end();
 });
+
+test('add first level function', (t) => {
+  const funcWithProp = () => {};
+  funcWithProp.prop = 42;
+  const result = merge({}, { last: funcWithProp });
+
+  t.equal(result.last.prop, 42, 'should merge non existing functions one level deep');
+  t.end();
+});
+
+test('add second level function', (t) => {
+  const result = merge({}, { first: { last: noop } });
+
+  t.equal(result.first.last, noop, 'should merge non existing functions two levels deep');
+  t.end();
+});

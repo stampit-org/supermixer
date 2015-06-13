@@ -11,8 +11,11 @@ import isUndefined from 'lodash/lang/isUndefined';
  * @param {Function} opts.filter Function which filters value and key.
  * @param {Boolean} opts.chain Loop through prototype properties too.
  * @param {Boolean} opts.deep Deep looping through the nested properties.
+ * @param {Boolean} opts.noOverwrite Do not overwrite any existing data (aka first one wins).
+ * @return {Function} A new mix function.
  */
 export default function mixer(opts = {}) {
+  // We will be recursively calling the exact same function when walking deeper.
   if (opts.deep && !opts._innerMixer) {
     opts._innerMixer = true; // avoiding infinite recursion.
     opts._innerMixer = mixer(opts); // create same mixer for recursion purpose.
@@ -27,12 +30,11 @@ export default function mixer(opts = {}) {
    * @return {Object} The mixed object.
    */
   return function mix(target, ...sources) {
-    if (isUndefined(target)) { // This means we have called the function. See recursion calls below.
-      if (opts.deep) {
-        return cloneDeep(sources[0], opts.filter);
+    if (isUndefined(target)) { // This means it's us who called the function. See recursion calls below.
+      if (sources.length > 1) { // Weird, but someone called this mixer with first argument undefined.
+        return opts._innerMixer({}, ...sources);
       }
-
-      return sources[0];
+      return cloneDeep(sources[0]);
     }
 
     if (opts.noOverwrite) {
