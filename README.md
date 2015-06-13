@@ -4,10 +4,10 @@
 Mixes/merges/extends your object in multiple ways.
 
 Unlike underscore/lodash utility methods this module allows you to:
-* mix or deep merge objects' prototype chain. Regular mixin/extend/assign implementations can't do that.
-* mix or deep merge unique properties only. I.e. no data will be overwritten if a property already exists.
-* filter each individual property by target value, source value, and key. See API.
-* transform each value by target value, source value, and key. See API.
+* mix or deep merge objects' **prototype chain**. Regular mixin/extend/assign implementations can't do that.
+* mix or deep merge **unique** properties only. I.e. data will **not be overwritten** if a property already exists.
+* filter each individual property by **target value**, **source value**, and **key**. See API.
+* transform each value by **target value**, **source value**, and **key**. See API.
 
 ## Install
 ```sh
