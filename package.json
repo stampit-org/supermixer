@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/koresar/supermixer.git"
+    "url": "git+https://github.com/stampit-org/supermixer.git"
   },
   "keywords": [
     "merge",
@@ -26,9 +26,9 @@
   "author": "koresar",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/koresar/supermixer/issues"
+    "url": "https://github.com/stampit-org/supermixer/issues"
   },
-  "homepage": "https://github.com/koresar/supermixer#readme",
+  "homepage": "https://github.com/stampit-org/supermixer#readme",
   "dependencies": {
     "lodash": "^3.8.0"
   },
