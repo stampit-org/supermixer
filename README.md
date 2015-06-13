@@ -13,7 +13,7 @@ $ npm install supermixer
 var mixer = require('supermixer');
 ```
 
-_**NB! All functions always mutate the first argument, unless the option `clone: true` is set.**_
+_**NB! All functions always mutate the first argument.**_
 
 ### Regular mixin, aka `Object.assign`, aka `$.extend`.
 ```js
