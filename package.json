@@ -34,7 +34,7 @@
   },
   "devDependencies": {
     "babel": "^5.4.7",
-    "babel-eslint": "^3.1.9",
+    "babel-eslint": "^4.1.7",
     "eslint": "^0.21.2",
     "require-all": "^1.1.0",
     "rimraf": "^2.3.4",
