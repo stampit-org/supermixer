@@ -1,6 +1,6 @@
 import mixer from './mixer';
-import isFunction from 'lodash/lang/isFunction';
 
+const isFunction = val => typeof val === 'function';
 const isNotFunction = val => !isFunction(val);
 
 /**
