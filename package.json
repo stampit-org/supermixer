@@ -30,13 +30,13 @@
   },
   "homepage": "https://github.com/stampit-org/supermixer#readme",
   "dependencies": {
-    "lodash": "^3.8.0"
+    "lodash": "^4.17.1"
   },
   "devDependencies": {
-    "babel": "^5.4.7",
-    "babel-eslint": "^4.1.7",
-    "eslint": "^0.21.2",
-    "require-all": "^1.1.0",
+    "babel": "^6.5.2",
+    "babel-eslint": "^7.1.0",
+    "eslint": "^3.10.2",
+    "require-all": "^2.0.0",
     "rimraf": "^2.3.4",
     "tape": "^4.0.0"
   }
