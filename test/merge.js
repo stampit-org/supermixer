@@ -67,7 +67,7 @@ test('merging should avoid prototype pollutions', (t) => {
   t.notEqual(result.poc, 'evil', 'Should not merge __proto__.');
 
   result = merge({}, { constructor: noop });
-  t.notEqual(result.constructor, noop, 'Should not merge constructor functions')
+  t.notEqual(result.constructor, noop, 'Should not merge constructor functions');
 
   t.end();
 });
