@@ -61,3 +61,13 @@ test('merge', (t) => {
   t.ok(result.func2, 'Should mix functions.');
   t.end();
 });
+
+test('merging should avoid prototype pollutions', (t) => {
+  let result = merge({}, JSON.parse('{"__proto__":{"poc":"evil"}}'));
+  t.notEqual(result.poc, 'evil', 'Should not merge __proto__.');
+
+  result = merge({}, { constructor: noop });
+  t.notEqual(result.constructor, noop, 'Should not merge constructor functions')
+
+  t.end();
+});

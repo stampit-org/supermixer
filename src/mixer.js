@@ -47,6 +47,9 @@ export default function mixer(opts = {}) {
     }
 
     function iteratee(sourceValue, key) {
+      if (key === 'constructor' && typeof sourceValue === 'function') return;
+      if (key == '__proto__') return;
+
       const targetValue = target[key];
       if (opts.filter && !opts.filter(sourceValue, targetValue, key)) {
         return;
