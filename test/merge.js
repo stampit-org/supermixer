@@ -1,5 +1,5 @@
 import test from 'tape';
-import noop from 'lodash/utility/noop';
+import noop from 'lodash/noop';
 import { merge } from '../src/index';
 
 test('merging two objects', (t) => {

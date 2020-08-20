@@ -1,5 +1,5 @@
 import test from 'tape';
-import noop from 'lodash/utility/noop';
+import noop from 'lodash/noop';
 import {mixinChainFunctions} from '../src/index';
 
 function isGeneratorSupported() {

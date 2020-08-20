@@ -1,8 +1,8 @@
-import forOwn from 'lodash/object/forOwn';
-import forIn from 'lodash/object/forIn';
-import cloneDeep from 'lodash/lang/cloneDeep';
-import isMergeable from 'lodash/lang/isObject';
-import isUndefined from 'lodash/lang/isUndefined';
+import forOwn from 'lodash/forOwn';
+import forIn from 'lodash/forIn';
+import cloneDeep from 'lodash/cloneDeep';
+import isMergeable from 'lodash/isObject';
+import isUndefined from 'lodash/isUndefined';
 
 /**
  * Factory for creating mixin functions of all kinds.
