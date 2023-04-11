@@ -1,4 +1,3 @@
-[![Build Status](https://travis-ci.org/stampit-org/supermixer.svg?branch=master)](https://travis-ci.org/stampit-org/supermixer)
 # Super Mixer
 
 Mixes/merges/extends your object in multiple ways.
