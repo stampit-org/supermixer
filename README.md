@@ -36,7 +36,7 @@ The `opts`:
 Usage:
 ```js
 const mix = supermixer({
-  filter(sourceValue, targetValue, key) { return key[0] !== '_'; }, // do not copy "private" values
+  filter: (sourceValue, targetValue, key) => key[0] !== '_', // do not copy "private" values
   transform(resultValue, targetValue, key) { console.log(key); return resultValue; }, // log each key which gets set
   chain: true,
   deep: true,
@@ -61,7 +61,7 @@ extend({}, { a: 1 }, { b: 2 });
 ```js
 // assigns own functions only
 var functionMixer = supermixer({
-  filter: function (sourceValue) { return typeof sourceValue === 'function'; }
+  filter: (sourceValue) => sourceValue === 'function'
 });
 // OR
 functionMixer = supermixer.mixinFunctions;
@@ -74,7 +74,7 @@ functionMixer({}, { a: "x" },  { b: function(){} });
 ```js
 // assigns functions only, but traverse through the prototype chain
 var chainFunctionMixer = supermixer({
-  filter: function (sourceValue) { return typeof sourceValue === 'function'; },
+  filter: (sourceValue) => typeof sourceValue === 'function',
   chain: true
 });
 // OR
@@ -115,7 +115,7 @@ mergeUnique({ url: { host: "example.com" } }, { url: { host: "evil.com" } });
 ```js
 // deeply merges data properties, traversing through prototype chain
 var mergeChainData =  supermixer({
-  filter: function (sourceValue) { return typeof sourceValue !== 'function'; },
+  filter: (sourceValue) => typeof sourceValue !== 'function',
   deep: true,
   chain: true
 });
