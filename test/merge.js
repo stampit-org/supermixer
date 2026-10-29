@@ -71,3 +71,11 @@ test('merging should avoid prototype pollutions', (t) => {
 
   t.end();
 });
+
+test('merging should avoid prototype pollutions', (t) => {
+  let result = merge({}, JSON.parse('{"constructor":{"prototype":{"isAdmin":true}}}'));
+
+  t.notEqual(result.isAdmin, true, 'Should not merge constructor.');
+  t.notEqual(({}).isAdmin, true, 'Should not merge constructor into global object');
+  t.end();
+});
